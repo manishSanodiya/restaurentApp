@@ -1,4 +1,7 @@
+
 import React, { useReducer } from 'react'
+
+import React, { useState } from 'react'
 import CartContext from './Cart-context'
 
 
@@ -66,9 +69,19 @@ const cartReducer = (state, action) =>{
 
 
 const CartProvider = (props) => {
+
     // const [items,updateItems] = useState([]);
     const [cartState, dispatchCartAction] = useReducer(cartReducer, defaultCartState);
 
+
+    const [items,updateItems] = useState([]);
+
+
+    const addItemToCartHandler = item => {
+      
+       updateItems([...items,item])
+       console.log(cartContext);
+    };
 
     const addItemToCartHandler = item => {
       
@@ -84,9 +97,15 @@ const CartProvider = (props) => {
     };
 
     const cartContext = {
-        items: cartState.items,
+   items: cartState.items,
         id: cartState.id,
         totalAmount: cartState.totalAmount,
+
+        key: items.id,
+        items: items,
+        id: items.id,
+        totalAmount: 0,
+
         addItem: addItemToCartHandler,
         removeItem: removeItemFromCartHandler
     };
